@@ -4,7 +4,7 @@ SolaX Power official web API
 Install:
 add line to configuration.yaml:
 
-**sensor: !include sensor.yaml**
+`sensor: !include sensor.yaml`
 
 Example:
 ```
