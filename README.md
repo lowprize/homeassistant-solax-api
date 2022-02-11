@@ -33,3 +33,9 @@ API docs: https://www.solaxcloud.com/phoebus/resource/files/userGuide/Solax_API.
 
 Note:
 Tested on X3-Hybiyd/Fit
+
+ToDo:
+- timestamp
+- icons
+- device_state
+- code optimalizations
