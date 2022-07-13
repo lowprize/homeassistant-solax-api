@@ -16,8 +16,8 @@
       solax_api_acpower:
         friendly_name: "Solax Inverter AC power total"  
         value_template: '{{ states.sensor.solax_api.attributes["result"]["acpower"] }}'
-        unit_of_measurement: "kW"
-        device_class: energy
+        unit_of_measurement: "W"
+        device_class: power
       solax_api_yieldtoday:
         friendly_name: "Solax Inverter AC energy out daily"  
         value_template: '{{ states.sensor.solax_api.attributes["result"]["yieldtoday"] }}'
