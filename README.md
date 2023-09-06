@@ -1,6 +1,6 @@
 # homeassistant-solax-api
 SolaX cloud for Home assistant 
- read data with official web API
+read data from Solax cloud via official web API
 
 Tested on X3 Gen3 and Gen4
 

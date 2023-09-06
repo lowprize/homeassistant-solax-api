@@ -104,14 +104,19 @@
         {% elif state_attr('sensor.solax_api', 'inverterStatus') == '113' %}Gen Run
         {% else %}Unknown mode{% endif %}
 # End of Invertor status
-    solax_api_uploadtime:
-      friendly_name: "Solax Update time"
-      value_template: "{{ state_attr('sensor.solax_api', 'uploadTime')| timestamp_local }}"
-      device_class: timestamp
+# upload Time does not work
+#    solax_api_uploadtime:
+#      friendly_name: "Solax Update time"
+#      #nok
+#      value_template: "{{ as_timestamp(state_attr('sensor.solax_api', 'uploadTime'))| timestamp_local }}"
+#      #ok
+#      value_template: '{{  as_timestamp(states.sensor.solax_api.attributes["uploadTime"]) }}'
+#      device_class: timestamp
+#end of time      
     solax_api_batpower:
       friendly_name: "Solax DC Battery power total"
       value_template: "{{ state_attr('sensor.solax_api', 'batPower') }}"
-      unit_of_measurement: "%W"
+      unit_of_measurement: "W"
       device_class: battery
     solax_api_powerdc1 :
       friendly_name: "Solax DC PV power MPPT1"
