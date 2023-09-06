@@ -79,7 +79,7 @@
       unit_of_measurement: "W"
       device_class: power
     solax_api_peps3:
-      friendly_name: "Solax AC EPS power T"  
+      friendly_name: "Solax AC EPS power T"
       value_template: "{{ state_attr('sensor.solax_api', 'peps3') }}"
       unit_of_measurement: "W"
       device_class: power
@@ -104,14 +104,14 @@
         {% elif state_attr('sensor.solax_api', 'inverterStatus') == '113' %}Gen Run
         {% else %}Unknown mode{% endif %}
 # End of Invertor status
-# upload Time does not work
-#    solax_api_uploadtime:
-#      friendly_name: "Solax Update time"
-#      #nok
+# upload Time does not work as I need
+    solax_api_uploadtime:
+      friendly_name: "Solax Update time"
+      #nok
 #      value_template: "{{ as_timestamp(state_attr('sensor.solax_api', 'uploadTime'))| timestamp_local }}"
 #      #ok
-#      value_template: '{{  as_timestamp(states.sensor.solax_api.attributes["uploadTime"]) }}'
-#      device_class: timestamp
+      value_template: '{{  as_timestamp(states.sensor.solax_api.attributes["uploadTime"]) }}'
+      device_class: timestamp
 #end of time      
     solax_api_batpower:
       friendly_name: "Solax DC Battery power total"
@@ -138,3 +138,5 @@
       value_template: "{{ state_attr('sensor.solax_api', 'powerdc4') }}"
       unit_of_measurement: "W"
       device_class: power
+#Calculated sensors
+
