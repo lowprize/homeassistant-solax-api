@@ -1,0 +1,182 @@
+######## Solax
+- platform: rest
+  scan_interval: 60
+  resource: https://www.solaxcloud.com/proxyApp/proxy/api/getRealtimeInfo.do?tokenId=VasTokenID&sn=SNVasehoInverteru
+  name: "Solax Garage"
+  json_attributes_path: "$.result"
+  json_attributes:
+    - yieldtoday
+    - yieldtotal
+    - powerdc1
+    - powerdc2
+    - uploadTime
+    - inverterStatus
+    - acpower
+    - feedinpower
+    - feedinenergy
+    - soc
+    - consumeenergy
+    - batPower
+  value_template: "1" # dummy value; not used; avoids error
+- platform: template
+  sensors:
+    solax_garage_today:
+      friendly_name: "Solax Garage today"
+      value_template: "{{ state_attr('sensor.solax_garage', 'yieldtoday') }}"
+      unit_of_measurement: "kWh"
+    solax_garage_total:
+      friendly_name: "Solax Garage total"
+      value_template: "{{ state_attr('sensor.solax_garage', 'yieldtotal') }}"
+      unit_of_measurement: "kWh"
+    solax_garage_now:
+      friendly_name: "Solax Garage now"
+      value_template: "{{ state_attr('sensor.solax_garage', 'acpower') }}"
+      unit_of_measurement: "W"
+    solax_garage_pv1:
+      friendly_name: "Solax Garage PV Power1"
+      value_template: "{{ state_attr('sensor.solax_garage', 'powerdc1') }}"
+    solax_garage_pv2:
+      friendly_name: "Solax Garage PV Power2"
+      value_template: "{{ state_attr('sensor.solax_garage', 'powerdc2') }}"
+      unit_of_measurement: "W"
+      icon_template: mdi:solar-panel
+    solax_garage_pin:
+      friendly_name: "Solax Garage FeedIn Power"
+      value_template: "{{ state_attr('sensor.solax_garage', 'feedinpower') }}"
+      unit_of_measurement: "W"
+    solax_garage_ein:
+      friendly_name: "Solax Garage FeedIn Energy"
+      value_template: "{{ state_attr('sensor.solax_garage', 'feedinenergy') }}"
+      unit_of_measurement: "kWh"
+    solax_garage_soc:
+      friendly_name: "Solax Garage Battery Charge level"
+      value_template: "{{ state_attr('sensor.solax_garage', 'soc') }}"
+      unit_of_measurement: "%"
+    solax_garage_econ:
+      friendly_name: "Solax Garage Consume Energy"
+      value_template: "{{ state_attr('sensor.solax_garage', 'consumeenergy') }}"
+      unit_of_measurement: "kWh"
+    solax_garage_upload_time:
+      friendly_name: "Solax Garage upload time"
+      value_template: "{{ state_attr('sensor.solax_garage', 'uploadTime') }}"
+      icon_template: mdi:alarm-check
+    solax_garage_bat_power:
+      friendly_name: "Solax Battery Power"
+      value_template: "{{ state_attr('sensor.solax_garage', 'batPower') }}"  
+    solax_garage_status:
+      friendly_name: "Solax Garage status"
+      value_template: >
+        {% if state_attr('sensor.solax_garage', 'inverterStatus') == '100' %}Wait
+        {% elif state_attr('sensor.solax_garage', 'inverterStatus') == '101' %}Check
+        {% elif state_attr('sensor.solax_garage', 'inverterStatus') == '102' %}Normal
+        {% elif state_attr('sensor.solax_garage', 'inverterStatus') == '103' %}Fault
+        {% elif state_attr('sensor.solax_garage', 'inverterStatus') == '104' %}Permanent Fault
+        {% elif state_attr('sensor.solax_garage', 'inverterStatus') == '105' %}Update
+        {% elif state_attr('sensor.solax_garage', 'inverterStatus') == '106' %}EPS Check
+        {% elif state_attr('sensor.solax_garage', 'inverterStatus') == '107' %}EPS
+        {% elif state_attr('sensor.solax_garage', 'inverterStatus') == '108' %}Self-test
+        {% elif state_attr('sensor.solax_garage', 'inverterStatus') == '109' %}Idle
+        {% elif state_attr('sensor.solax_garage', 'inverterStatus') == '110' %}Standby
+        {% elif state_attr('sensor.solax_garage', 'inverterStatus') == '111' %}Pv Wake Up Bat
+        {% elif state_attr('sensor.solax_garage', 'inverterStatus') == '112' %}Gen Check
+        {% elif state_attr('sensor.solax_garage', 'inverterStatus') == '113' %}Gen Run
+        {% else %}I dont know{% endif %}
+    solax_now:
+      friendly_name: "Inverter Power"
+      unit_of_measurement: "W"
+      value_template: "{{ (states('sensor.solax_garage_now') | float) }}"
+      icon_template: mdi:lightning-bolt-circle
+    solax_today:
+      friendly_name: "PV today"
+      unit_of_measurement: "kWh"
+      value_template: "{{ (states('sensor.solax_garage_today') | float) }}"
+    solax_total:
+      friendly_name: "PV total"
+      unit_of_measurement: "kWh"
+      value_template: "{{ (states('sensor.solax_garage_total') | float) }}"
+    solax_pv_power1:
+      friendly_name: "PV Power1"
+      unit_of_measurement: "W"
+      value_template: "{{ (states('sensor.solax_garage_pv1') | float) }}"
+      icon_template: mdi:solar-power-variant-outline
+    solax_pv_power2:
+      friendly_name: "PV Power2"
+      unit_of_measurement: "W"
+      value_template: "{{ (states('sensor.solax_garage_pv2') | float) }}"
+      icon_template: mdi:solar-power-variant-outline
+    solax_pv_power_total:
+      friendly_name: "PV Power Total"
+      unit_of_measurement: "W"
+      value_template: "{{ (states('sensor.solax_garage_pv2') | float) + (states('sensor.solax_garage_pv1') | float) }}"
+      icon_template: mdi:solar-power-variant
+    solax_house_cons:
+      friendly_name: "House Power"
+      unit_of_measurement: "W"
+      value_template: "{{ (states('sensor.solax_garage_now') | float) - (states('sensor.solax_garage_pin') | float) }}"
+      icon_template: mdi:home-lightning-bolt-outline
+    solax_feedin_power:
+      friendly_name: "Grid Power"
+      unit_of_measurement: "W"
+      icon_template: mdi:transmission-tower
+      value_template: "{{ (states('sensor.solax_garage_pin') | float) }}"
+    solax_feedin_energy:
+      friendly_name: "FeedIn Energy"
+      unit_of_measurement: "kWh"
+      value_template: "{{ (states('sensor.solax_garage_ein') | float) }}"
+    solax_soc_level:
+      friendly_name: "Battery Charge level"
+      unit_of_measurement: "%"
+      value_template: "{{ (states('sensor.solax_garage_soc') | float) }}"
+      icon_template: mdi:home-battery
+    solax_batt_power:
+      friendly_name: "Battery Power"
+      unit_of_measurement: "W"
+      value_template: "{{ (states('sensor.solax_garage_bat_power') | float) }}"
+      icon_template: mdi:battery
+    solax_consume_energy:
+      friendly_name: "Consume Energy"
+      unit_of_measurement: "kWh"
+      value_template: "{{ (states('sensor.solax_garage_econ') | float) }}"
+    solax_consume_power:
+      friendly_name: "Consume Power"
+      unit_of_measurement: "W"
+      value_template: "{{ (states('sensor.solax_garage_now') | float) - (states('sensor.solax_garage_pin') | float) }}"
+      
+# Calculate battery power in and out 
+    battery_in:
+      friendly_name: Battery in
+      unit_of_measurement: W
+      value_template: >
+        {% if (states('sensor.solax_garage_bat_power') | float ) > 0  %}
+          {{ (states('sensor.solax_garage_bat_power') | float | abs) }}
+        {% else %}
+          0
+        {% endif %} 
+    battery_out:
+      friendly_name: Battery out
+      unit_of_measurement: W
+      value_template: >
+        {% if (states('sensor.solax_garage_bat_power') | float ) < 0  %}
+          {{ (states('sensor.solax_garage_bat_power') | float | abs) }}
+        {% else %}
+          0
+        {% endif %}
+        
+- platform: integration
+  source: sensor.battery_in
+  name: total_battery_in
+  unit_prefix: k
+  round: 2
+  method: left
+- platform: integration
+  source: sensor.battery_out
+  name: total_battery_out
+  unit_prefix: k
+  round: 2
+  method: left
+- platform: integration
+  source: sensor.solax_house_cons
+  name: selfiehome_energy_spent
+  unit_prefix: k
+  round: 2
+######## Solax

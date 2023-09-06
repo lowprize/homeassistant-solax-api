@@ -1,0 +1,170 @@
+  - platform: rest
+    name: Solax API
+    resource: !secret solax_api
+    method: GET
+    scan_interval: 30
+    value_template: 'OK'
+    json_attributes:
+    - success
+    - exception
+    - result
+  - platform: template
+    sensors:
+      solax_api_sn:
+        friendly_name: "Solax Unique identifier of communication module"  
+        value_template: '{{ states.sensor.solax_api.attributes["result"]["sn"] }}'
+      solax_api_acpower:
+        friendly_name: "Solax Inverter AC power total"  
+        value_template: '{{ states.sensor.solax_api.attributes["result"]["acpower"] }}'
+        unit_of_measurement: "W"
+        device_class: power
+      solax_api_yieldtoday:
+        friendly_name: "Solax Inverter AC energy out daily"  
+        value_template: '{{ states.sensor.solax_api.attributes["result"]["yieldtoday"] }}'
+        unit_of_measurement: "kWh"
+        device_class: energy
+      solax_api_yieldtotal:
+        friendly_name: "Solax Inverter AC energy out total"  
+        value_template: '{{ states.sensor.solax_api.attributes["result"]["yieldtotal"] }}'
+        unit_of_measurement: "kWh"
+        device_class: energy
+      solax_api_feedinpower:
+        friendly_name: "Solax Grid power total"  
+        value_template: '{{ states.sensor.solax_api.attributes["result"]["feedinpower"] }}'
+        unit_of_measurement: "W"
+        device_class: power
+      solax_api_feedinenergy:
+        friendly_name: "Solax Grid energy to Grid total"  
+        value_template: '{{ states.sensor.solax_api.attributes["result"]["feedinenergy"] }}'
+        unit_of_measurement: "kWh"
+        device_class: energy
+      solax_api_consumeenergy:
+        friendly_name: "Solax Grid energy from Grid total "  
+        value_template: '{{ states.sensor.solax_api.attributes["result"]["consumeenergy"] }}'
+        unit_of_measurement: "kWh"
+        device_class: energy
+      solax_api_feedinpowerm2:
+        friendly_name: "Solax Inverter Meter2 AC power total"  
+        value_template: '{{ states.sensor.solax_api.attributes["result"]["feedinpowerM2"] }}'
+        unit_of_measurement: "W"
+        device_class: power
+      solax_api_soc:
+        friendly_name: "Solax BMS energy SOC"  
+        value_template: '{{ states.sensor.solax_api.attributes["result"]["soc"] }}'
+        unit_of_measurement: "%"
+      solax_api_peps1:
+        friendly_name: "Solax Inverter AC EPS power R"  
+        value_template: '{{ states.sensor.solax_api.attributes["result"]["peps1"] }}'
+        unit_of_measurement: "W"
+        device_class: power
+      solax_api_peps2:
+        friendly_name: "Solax Inverter AC EPS power S"  
+        value_template: '{{ states.sensor.solax_api.attributes["result"]["peps2"] }}'
+        unit_of_measurement: "W"
+        device_class: power
+      solax_api_peps3:
+        friendly_name: "Solax Inverter AC EPS power T"  
+        value_template: '{{ states.sensor.solax_api.attributes["result"]["peps3"] }}'
+        unit_of_measurement: "W"
+        device_class: power
+# Ivertor type
+      solax_api_invertertype:
+        friendly_name: "Solax Inverter Type"  
+        value_template: >-
+          {% if states.sensor.solax_api.attributes["result"]["inverterType"] == "1" %}
+            X1-LX
+          {% elif states.sensor.solax_api.attributes["result"]["inverterType"] == "2" %}
+            X-Hybrid
+          {% elif states.sensor.solax_api.attributes["result"]["inverterType"] == "3" %}
+            X1-Hybiyd/Fit
+          {% elif states.sensor.solax_api.attributes["result"]["inverterType"] == "4" %}
+            X1-Boost/Air/Mini
+          {% elif states.sensor.solax_api.attributes["result"]["inverterType"] == "5" %}
+            X3-Hybiyd/Fit
+          {% elif states.sensor.solax_api.attributes["result"]["inverterType"] == "6" %}
+            X3-20K/30K           
+          {% elif states.sensor.solax_api.attributes["result"]["inverterType"] == "7" %}
+            X3-MIC/PRO           
+          {% elif states.sensor.solax_api.attributes["result"]["inverterType"] == "8" %}
+            X1-Smart
+          {% elif states.sensor.solax_api.attributes["result"]["inverterType"] == "9" %}
+            X1-AC
+          {% elif states.sensor.solax_api.attributes["result"]["inverterType"] == "10" %}
+            A1-Hybrid
+          {% elif states.sensor.solax_api.attributes["result"]["inverterType"] == "11" %}
+            A1-Fit
+          {% elif states.sensor.solax_api.attributes["result"]["inverterType"] == "12" %}
+            A1-Grid
+          {% elif states.sensor.solax_api.attributes["result"]["inverterType"] == "13" %}
+            J1-ESS           
+          {% else %}
+            Unknown
+          {% endif %}
+# End of Invertor type
+  
+# Invertor status
+      solax_api_inverterstatus:
+        friendly_name: "Solax Inverter status"
+        value_template: >-
+          {% if states.sensor.solax_api.attributes["result"]["inverterStatus"] == "100" %}
+            Wait Mode
+          {% elif states.sensor.solax_api.attributes["result"]["inverterStatus"] == "101" %}
+            Check Mode            
+          {% elif states.sensor.solax_api.attributes["result"]["inverterStatus"] == "102" %}
+            Normal Mode
+          {% elif states.sensor.solax_api.attributes["result"]["inverterStatus"] == "103" %}
+            Fault Mode
+          {% elif states.sensor.solax_api.attributes["result"]["inverterStatus"] == "104" %}
+            Permanent Fault Mode
+          {% elif states.sensor.solax_api.attributes["result"]["inverterStatus"] == "105" %}
+            Update Mode
+          {% elif states.sensor.solax_api.attributes["result"]["inverterStatus"] == "106" %}
+            EPS Check Mode           
+          {% elif states.sensor.solax_api.attributes["result"]["inverterStatus"] == "107" %}
+            EPS Mode           
+          {% elif states.sensor.solax_api.attributes["result"]["inverterStatus"] == "108" %}
+            Self-Test Mode
+          {% elif states.sensor.solax_api.attributes["result"]["inverterStatus"] == "109" %}
+            Idle Mode
+          {% elif states.sensor.solax_api.attributes["result"]["inverterStatus"] == "110" %}
+            Standby Mode
+          {% elif states.sensor.solax_api.attributes["result"]["inverterStatus"] == "111" %}
+            Pv Wake Up Bat Mode
+          {% elif states.sensor.solax_api.attributes["result"]["inverterStatus"] == "112" %}
+            Gen Check Mode
+          {% elif states.sensor.solax_api.attributes["result"]["inverterStatus"] == "113" %}
+            Gen Run Mode           
+          {% else %}
+            Unknown status
+          {% endif %}
+# End of Invertor status
+        
+      solax_api_uploadtime:
+        friendly_name: "Solax Update time"  
+        value_template: '{{  as_timestamp(states.sensor.solax_api.attributes["result"]["uploadTime"]) | timestamp_local}}'
+        device_class: timestamp
+      solax_api_batpower:
+        friendly_name: "Solax Inverter DC Battery power total"  
+        value_template: '{{ states.sensor.solax_api.attributes["result"]["batPower"] }}'
+        unit_of_measurement: "%W"
+        device_class: battery
+      solax_api_powerdc1 :
+        friendly_name: "Solax Inverter DC PV power MPPT1"  
+        value_template: '{{ states.sensor.solax_api.attributes["result"]["powerdc1"] }}'
+        device_class: power
+        unit_of_measurement: "W"
+      solax_api_powerdc2:
+        friendly_name: "Solax Inverter DC PV power MPPT2"  
+        value_template: '{{ states.sensor.solax_api.attributes["result"]["powerdc2"] }}'
+        unit_of_measurement: "W"
+        device_class: power
+      solax_api_powerdc3:
+        friendly_name: "Solax Inverter DC PV power MPPT3"  
+        value_template: '{{ states.sensor.solax_api.attributes["result"]["powerdc3"] }}'
+        unit_of_measurement: "W"
+        device_class: power
+      solax_api_powerdc4:
+        friendly_name: "Solax Inverter DC PV power MPPT4"  
+        value_template: '{{ states.sensor.solax_api.attributes["result"]["powerdc4"] }}'
+        unit_of_measurement: "W"
+        device_class: power
