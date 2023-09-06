@@ -1,4 +1,5 @@
-**SolaX cloud for Home assistant **
+**SolaX cloud for Home assistant**
+
 read data from Solax cloud via official web API
 
 Tested on X3 Gen3 and Gen4
