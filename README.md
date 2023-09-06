@@ -1,5 +1,4 @@
-# homeassistant-solax-api
-SolaX cloud for Home assistant 
+**SolaX cloud for Home assistant **
 read data from Solax cloud via official web API
 
 Tested on X3 Gen3 and Gen4
@@ -9,7 +8,7 @@ Requirements
 - Token ID: https://www.solaxcloud.com/#/api
 
 Install:
-- Edit secrets.yaml  (see secrets.yaml.sample)
+- Edit *secrets.yaml*  (see secrets.yaml.sample)
 - create "sensors" directory in config directory (config/sensors/)
 - edit configuration (see configuration.yaml.sample)
 
