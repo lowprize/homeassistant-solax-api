@@ -115,7 +115,7 @@
       #nok
 #      value_template: "{{ as_timestamp(state_attr('sensor.solax_api', 'uploadTime'))| timestamp_local }}"
 #      #ok
-      value_template: '{{  as_timestamp(states.sensor.solax_api.attributes["uploadTime"]) }}'
+      value_template: '{{  as_timestamp(states.sensor.solax_api.attributes["uploadTime"]) | timestamp_local}}'
       device_class: timestamp
 #end of time      
     solax_api_batpower:
