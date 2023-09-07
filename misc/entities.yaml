@@ -1,0 +1,23 @@
+type: entities
+entities:
+  - entity: sensor.solax_api_acpower
+  - entity: sensor.solax_api_yieldtoday
+  - entity: sensor.solax_api_yieldtotal
+  - entity: sensor.solax_api_feedinpower
+  - entity: sensor.solax_api_feedinenergy
+  - entity: sensor.solax_api_consumeenergy
+  - entity: sensor.solax_api_feedinpowerm2
+  - entity: sensor.solax_api_soc
+  - entity: sensor.solax_api_peps1
+  - entity: sensor.solax_api_peps2
+  - entity: sensor.solax_api_peps3
+  - entity: sensor.solax_api_inverterstatus
+  - entity: sensor.solax_api_uploadtime
+  - entity: sensor.solax_api_batpower
+  - entity: sensor.solax_api_powerdc1
+  - entity: sensor.solax_api_powerdc2
+  - entity: sensor.solax_api_powerdc3
+  - entity: sensor.solax_api_powerdc4
+title: Solax API
+state_color: false
+show_header_toggle: false
