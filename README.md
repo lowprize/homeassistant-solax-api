@@ -19,3 +19,5 @@ Update:
 2023-09-05 split sensors config
 
 Docs version 6.1 (2022-06-10) https://www.solaxcloud.com/phoebus/resource/files/userGuide/Solax_API.pdf
+
+![Dashboard](https://github.com/lowprize/homeassistant-solax-api/blob/main/misc/dashboard.png)
