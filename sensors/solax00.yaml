@@ -110,15 +110,10 @@
         {% elif state_attr('sensor.solax_api', 'inverterStatus') == '113' %}Gen Run
         {% else %}Unknown mode{% endif %}
 # End of Invertor status
-# upload Time does not work as I need
     solax_api_uploadtime:
       friendly_name: "Solax Update time"
-      #nok
-#      value_template: "{{ as_timestamp(state_attr('sensor.solax_api', 'uploadTime'))| timestamp_local }}"
-#      #ok
-      value_template: '{{  as_timestamp(states.sensor.solax_api.attributes["uploadTime"]) | timestamp_local}}'
+      value_template: "{{as_timestamp(state_attr('sensor.solax_api', 'uploadTime'), none) | timestamp_local}}"
       device_class: timestamp
-#end of time      
     solax_api_batpower:
       friendly_name: "Solax DC Battery power total"
       value_template: "{{ (state_attr('sensor.solax_api', 'batPower')) | float(0) }}"
@@ -152,7 +147,7 @@
 #Calculated sensors
     solax_api_calc_dc:
       friendly_name: "Solax DC PV power total"
-      value_template: "{{ states('sensor.solax_api_powerdc1') + states('olax_api_powerdc2') }}"
+      value_template: "{{ states('sensor.solax_api_powerdc1') |float(0) + states('sensor.solax_api_powerdc2') | float(0) + states('sensor.solax_api_powerdc3') | float(0) + states('sensor.solax_api_powerdc4') | float(0)}}"
       unit_of_measurement: "W"
       device_class: power
       icon_template: mdi:solar-power-variant
