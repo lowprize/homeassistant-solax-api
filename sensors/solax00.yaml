@@ -52,19 +52,19 @@
       value_template: "{{ (state_attr('sensor.solax_api', 'feedinpower')) | float(0) }}"
       unit_of_measurement: "W"
       device_class: power
-      icon_template: mdi:transmission-tower-export
+      icon_template: mdi:home-export-outline
     solax_api_feedinenergy:
       friendly_name: "Solax total exported energy to Grid"
       value_template: "{{ (state_attr('sensor.solax_api', 'feedinenergy')) | float(0) }}"
       unit_of_measurement: "kWh"
-      icon_template: mdi:transmission-tower-import
+      icon_template: mdi:home-export-outline
       device_class: energy
     solax_api_consumeenergy:
       friendly_name: "Solax total energy from Grid total"
       value_template: "{{ (state_attr('sensor.solax_api', 'consumeenergy')) | float(0) }}"
       unit_of_measurement: "kWh"
       device_class: energy
-      icon_template: mdi:transmission-tower-export
+      icon_template: mdi:home-import-outline
     solax_api_feedinpowerm2:
       friendly_name: "Solax Inverter Meter2 AC power total"
       value_template: "{{ (state_attr('sensor.solax_api', 'feedinpowerM2')) | float(0) }}"
@@ -74,6 +74,7 @@
       friendly_name: "Solax BMS energy SOC"
       value_template: "{{ (state_attr('sensor.solax_api', 'soc')) | float(0) }}"
       unit_of_measurement: "%"
+      icon_template: mdi:battery
     solax_api_peps1:
       friendly_name: "Solax AC EPS power R"
       value_template: "{{ (state_attr('sensor.solax_api', 'peps1')) | float(0) }}"
