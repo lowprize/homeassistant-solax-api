@@ -1,6 +1,6 @@
 - platform: rest
   name: "Solax API"
-  resource: !secret solax_api
+  resource: !secret solax00
   method: GET
   scan_interval: 30
   value_template: 'OK'
@@ -31,63 +31,74 @@
   sensors:
     solax_api_acpower:
       friendly_name: "Solax AC power total"
-      value_template: "{{ (state_attr('sensor.solax_api', 'acpower')) | float(0) }}"
+      value_template: "{{ state_attr('sensor.solax_api', 'acpower') | float(0) }}"
+      availability_template: "{{ state_attr('sensor.solax_api', 'acpower') | is_number }}" 
       unit_of_measurement: "W"
       device_class: power
       icon_template: mdi:lightning-bolt-circle
     solax_api_yieldtoday:
       friendly_name: "Solax AC energy out daily"
-      value_template: "{{ (state_attr('sensor.solax_api', 'yieldtoday')) | float(0) }}"
+      value_template: "{{ state_attr('sensor.solax_api', 'yieldtoday') | float(0) }}"
+      availability_template: "{{ state_attr('sensor.solax_api', 'yieldtoday') | is_number }}"
       unit_of_measurement: "kWh"
       device_class: energy
       icon_template: mdi:solar-power-variant-outline
     solax_api_yieldtotal:
       friendly_name: "Solax AC energy out total"
-      value_template: "{{ (state_attr('sensor.solax_api', 'yieldtotal')) | float(0) }}"
+      value_template: "{{ state_attr('sensor.solax_api', 'yieldtotal') | float(0) }}"
+      availability_template: "{{ state_attr('sensor.solax_api', 'yieldtotal') | is_number }}"
       unit_of_measurement: "kWh"
       device_class: energy
       icon_template: mdi:solar-power-variant-outline
     solax_api_feedinpower:
       friendly_name: "Solax Grid power total"
-      value_template: "{{ (state_attr('sensor.solax_api', 'feedinpower')) | float(0) }}"
+      value_template: "{{ state_attr('sensor.solax_api', 'feedinpower') | float(0) }}"
+      availability_template: "{{ state_attr('sensor.solax_api', 'feedinpower') | is_number }}" 
       unit_of_measurement: "W"
       device_class: power
       icon_template: mdi:home-export-outline
     solax_api_feedinenergy:
       friendly_name: "Solax total exported energy to Grid"
-      value_template: "{{ (state_attr('sensor.solax_api', 'feedinenergy')) | float(0) }}"
+      value_template: "{{ state_attr('sensor.solax_api', 'feedinenergy') | float(0) }}"
+      availability_template: "{{ state_attr('sensor.solax_api', 'feedinenergy') | is_number }}"
       unit_of_measurement: "kWh"
       icon_template: mdi:home-export-outline
       device_class: energy
     solax_api_consumeenergy:
       friendly_name: "Solax total energy from Grid total"
-      value_template: "{{ (state_attr('sensor.solax_api', 'consumeenergy')) | float(0) }}"
+      value_template: "{{ state_attr('sensor.solax_api', 'consumeenergy') | float(0) }}"
+      availability_template: "{{ state_attr('sensor.solax_api', 'consumeenergy') | is_number }}" 
       unit_of_measurement: "kWh"
       device_class: energy
       icon_template: mdi:home-import-outline
     solax_api_feedinpowerm2:
       friendly_name: "Solax Inverter Meter2 AC power total"
-      value_template: "{{ (state_attr('sensor.solax_api', 'feedinpowerM2')) | float(0) }}"
+      value_template: "{{ state_attr('sensor.solax_api', 'feedinpowerM2') | float(0) }}"
+      availability_template: "{{ state_attr('sensor.solax_api', 'feedinpowerM2') | is_number }}"
       unit_of_measurement: "W"
       device_class: power
     solax_api_soc:
       friendly_name: "Solax BMS energy SOC"
-      value_template: "{{ (state_attr('sensor.solax_api', 'soc')) | float(0) }}"
+      value_template: "{{ state_attr('sensor.solax_api', 'soc') | float(0) }}"
+      availability_template: "{{ state_attr('sensor.solax_api', 'soc') | is_number }}"
       unit_of_measurement: "%"
       icon_template: mdi:battery
     solax_api_peps1:
       friendly_name: "Solax AC EPS power R"
-      value_template: "{{ (state_attr('sensor.solax_api', 'peps1')) | float(0) }}"
+      value_template: "{ (state_attr('sensor.solax_api', 'peps1') | float(0) }}"
+      availability_template: "{ (state_attr('sensor.solax_api', 'peps1') | is_number }}"
       unit_of_measurement: "W"
       device_class: power
     solax_api_peps2:
       friendly_name: "Solax AC EPS power S"
-      value_template: "{{ (state_attr('sensor.solax_api', 'peps2')) | float(0) }}"
+      value_template: "{{ state_attr('sensor.solax_api', 'peps2') | float(0) }}"
+      availability_template: "{{ state_attr('sensor.solax_api', 'peps2') | is_number }}"
       unit_of_measurement: "W"
       device_class: power
     solax_api_peps3:
       friendly_name: "Solax AC EPS power T"
-      value_template: "{{ (state_attr('sensor.solax_api', 'peps3')) | float(0) }}"
+      value_template: "{{ state_attr('sensor.solax_api', 'peps3') | float(0) }}"
+      availability_template: "{{ state_attr('sensor.solax_api', 'peps3') | is_number }}"
       unit_of_measurement: "W"
       device_class: power
 
@@ -117,31 +128,36 @@
       device_class: timestamp
     solax_api_batpower:
       friendly_name: "Solax DC Battery power total"
-      value_template: "{{ (state_attr('sensor.solax_api', 'batPower')) | float(0) }}"
+      value_template: "{{ state_attr('sensor.solax_api', 'batPower') | float(0) }}"
+      availability_template: "{{ state_attr('sensor.solax_api', 'batPower') | is_number }}"
       unit_of_measurement: "W"
       device_class: power
       icon_template: mdi:home-battery
     solax_api_powerdc1 :
       friendly_name: "Solax DC PV power MPPT1"
-      value_template: "{{ (state_attr('sensor.solax_api', 'powerdc1')) | float(0) }}"
+      value_template: "{{ state_attr('sensor.solax_api', 'powerdc1') | float(0) }}"
+      availability_template: "{{ state_attr('sensor.solax_api', 'powerdc1') | is_number }}"
       device_class: power
       unit_of_measurement: "W"
       icon_template: mdi:solar-power-variant
     solax_api_powerdc2:
       friendly_name: "Solax DC PV power MPPT2"
-      value_template: "{{ (state_attr('sensor.solax_api', 'powerdc2')) | float(0) }}"
+      value_template: "{{ state_attr('sensor.solax_api', 'powerdc2') | float(0) }}"
+      availability_template: "{{ state_attr('sensor.solax_api', 'powerdc2') | is_number }}"
       unit_of_measurement: "W"
       device_class: power
       icon_template: mdi:solar-power-variant
     solax_api_powerdc3:
       friendly_name: "Solax DC PV power MPPT3"
-      value_template: "{{ (state_attr('sensor.solax_api', 'powerdc3')) | float(0) }}"
+      value_template: "{{ state_attr('sensor.solax_api', 'powerdc3') | float(0) }}"
+      availability_template: "{{ state_attr('sensor.solax_api', 'powerdc3') | is_number }}"
       unit_of_measurement: "W"
       device_class: power
       icon_template: mdi:solar-power-variant      
     solax_api_powerdc4:
       friendly_name: "Solax DC PV power MPPT4"
-      value_template: "{{ (state_attr('sensor.solax_api', 'powerdc4')) | float(0) }}"
+      value_template: "{{ state_attr('sensor.solax_api', 'powerdc4') | float(0) }}"
+      availability_template: "{{ state_attr('sensor.solax_api', 'powerdc4') | is_number }}"
       unit_of_measurement: "W"
       device_class: power
       icon_template: mdi:solar-power-variant      
